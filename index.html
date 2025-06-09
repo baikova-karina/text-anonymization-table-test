@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sortable and Filterable Table Example</title>
+  <title>Sortable and Filterable Table</title>
   <style>
     table {
       width: 100%;
@@ -38,8 +38,8 @@
       <th onclick="sortTable(0)">Study</th>
       <th onclick="sortTable(1)">Method</th>
       <th onclick="sortTable(2)">Language</th>
-      <th onclick="sortTable(3)">Training Corpora</th>
-      <th onclick="sortTable(4)">Test Set</th>
+      <th onclick="sortTable(3)">Training Data</th>
+      <th onclick="sortTable(4)">Test Data</th>
       <th onclick="sortTable(5)">F1</th>
     </tr>
   </thead>
@@ -75,41 +75,46 @@
 <script>
 let sortDirection = Array(6).fill(true); // true = ascending, false = descending
 
-function sortTable(n) {
-  const table = document.getElementById("myTable");
-  let switching = true;
-  let dir = sortDirection[n] ? "asc" : "desc";
-  sortDirection[n] = !sortDirection[n];
-  while (switching) {
-    switching = false;
-    const rows = table.rows;
-    for (let i = 1; i < (rows.length - 1); i++) {
-      let shouldSwitch = false;
-      const x = rows[i].getElementsByTagName("TD")[n];
-      const y = rows[i + 1].getElementsByTagName("TD")[n];
-      let xContent = x.textContent || x.innerText;
-      let yContent = y.textContent || y.innerText;
-      // Try to compare as numbers, fallback to string
-      const xNum = parseFloat(xContent);
-      const yNum = parseFloat(yContent);
-      if (!isNaN(xNum) && !isNaN(yNum)) {
-        if ((dir === "asc" && xNum > yNum) || (dir === "desc" && xNum < yNum)) {
-          shouldSwitch = true;
-          break;
-        }
-      } else {
-        if ((dir === "asc" && xContent.toLowerCase() > yContent.toLowerCase()) ||
-            (dir === "desc" && xContent.toLowerCase() < yContent.toLowerCase())) {
-          shouldSwitch = true;
-          break;
-        }
-      }
+function sortTable(colIdx) {
+  const table = document.getElementById("resultsTable");
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+
+  // Remove previous sort indicators
+  Array.from(table.tHead.rows[0].cells).forEach((th, idx) => {
+    th.classList.remove('sorted-asc', 'sorted-desc');
+    if (idx === colIdx) {
+      th.classList.add(sortState.col === colIdx && sortState.asc ? 'sorted-desc' : 'sorted-asc');
     }
-    if (shouldSwitch) {
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
+  });
+
+  // Toggle sort direction if same column, else default to ascending
+  if (sortState.col === colIdx) {
+    sortState.asc = !sortState.asc;
+  } else {
+    sortState.col = colIdx;
+    sortState.asc = true;
   }
+
+  rows.sort((a, b) => {
+    let aText = a.cells[colIdx].textContent.trim();
+    let bText = b.cells[colIdx].textContent.trim();
+
+    // Try numeric comparison for F1 column
+    if (colIdx === 5) {
+      aText = parseFloat(aText);
+      bText = parseFloat(bText);
+      if (isNaN(aText)) aText = 0;
+      if (isNaN(bText)) bText = 0;
+    }
+
+    if (aText < bText) return sortState.asc ? -1 : 1;
+    if (aText > bText) return sortState.asc ? 1 : -1;
+    return 0;
+  });
+
+  // Re-attach sorted rows
+  rows.forEach(row => tbody.appendChild(row));
 }
 
 function filterTable() {
