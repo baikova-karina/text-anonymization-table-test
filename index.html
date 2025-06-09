@@ -2,44 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sortable and Filterable Table</title>
+  <title>Sortable and Filterable Table Example</title>
   <style>
+    body { font-family: Arial, sans-serif; margin: 30px; }
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-top: 10px;
     }
     th, td {
       border: 1px solid #ccc;
       padding: 8px;
       text-align: left;
+    }
+    th {
+      background: #f4f4f4;
       cursor: pointer;
+      user-select: none;
     }
-    th.active {
-      background-color: #f0f0f0;
-    }
-    tr.hide {
-      display: none;
-    }
+    th.sorted-asc::after { content: " ▲"; }
+    th.sorted-desc::after { content: " ▼"; }
+    tr.hide { display: none; }
     input[type="text"] {
-      margin-bottom: 10px;
       width: 100%;
-      padding: 6px;
+      padding: 8px;
       font-size: 16px;
+      margin-bottom: 8px;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
 
-<input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Search table...">
+<h2>Study Results Table</h2>
+<input type="text" id="filterInput" placeholder="Type to filter table..." onkeyup="filterTable()">
 
-<table id="myTable">
+<table id="resultsTable">
   <thead>
     <tr>
       <th onclick="sortTable(0)">Study</th>
       <th onclick="sortTable(1)">Method</th>
       <th onclick="sortTable(2)">Language</th>
-      <th onclick="sortTable(3)">Training Data</th>
-      <th onclick="sortTable(4)">Test Data</th>
+      <th onclick="sortTable(3)">Training Corpora</th>
+      <th onclick="sortTable(4)">Test Set</th>
       <th onclick="sortTable(5)">F1</th>
     </tr>
   </thead>
@@ -68,12 +73,27 @@
       <td>CoNLL</td>
       <td>78.3</td>
     </tr>
-    <!-- Add more rows as needed -->
+    <tr>
+      <td>Wang et al. 2023</td>
+      <td>Transformer</td>
+      <td>Chinese</td>
+      <td>Chinese News</td>
+      <td>CLUE</td>
+      <td>81.7</td>
+    </tr>
+    <tr>
+      <td>Patel et al. 2021</td>
+      <td>GRU</td>
+      <td>Hindi</td>
+      <td>Hindi Wikipedia</td>
+      <td>HinEval</td>
+      <td>75.9</td>
+    </tr>
   </tbody>
 </table>
 
 <script>
-let sortDirection = Array(6).fill(true); // true = ascending, false = descending
+let sortState = { col: null, asc: true };
 
 function sortTable(colIdx) {
   const table = document.getElementById("resultsTable");
@@ -120,18 +140,14 @@ function sortTable(colIdx) {
 function filterTable() {
   const input = document.getElementById("filterInput");
   const filter = input.value.toLowerCase();
-  const table = document.getElementById("myTable");
-  const trs = table.getElementsByTagName("tr");
-  for (let i = 1; i < trs.length; i++) {
-    const tds = trs[i].getElementsByTagName("td");
-    let rowContainsFilter = false;
-    for (let j = 0; j < tds.length; j++) {
-      if (tds[j].textContent.toLowerCase().indexOf(filter) > -1) {
-        rowContainsFilter = true;
-        break;
-      }
-    }
-    trs[i].style.display = rowContainsFilter ? "" : "none";
+  const table = document.getElementById("resultsTable");
+  const rows = table.tBodies[0].rows;
+
+  for (let i = 0; i < rows.length; i++) {
+    let rowText = Array.from(rows[i].cells)
+      .map(td => td.textContent.toLowerCase())
+      .join(" ");
+    rows[i].style.display = rowText.includes(filter) ? "" : "none";
   }
 }
 </script>
