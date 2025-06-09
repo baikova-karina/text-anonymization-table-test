@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sortable and Filterable Table Example</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+    }
+    th.active {
+      background-color: #f0f0f0;
+    }
+    tr.hide {
+      display: none;
+    }
+    input[type="text"] {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 6px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<input type="text" id="filterInput" onkeyup="filterTable()" placeholder="Search table...">
+
+<table id="myTable">
+  <thead>
+    <tr>
+      <th onclick="sortTable(0)">Study</th>
+      <th onclick="sortTable(1)">Method</th>
+      <th onclick="sortTable(2)">Language</th>
+      <th onclick="sortTable(3)">Training Corpora</th>
+      <th onclick="sortTable(4)">Test Set</th>
+      <th onclick="sortTable(5)">F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Smith et al. 2021</td>
+      <td>BERT</td>
+      <td>English</td>
+      <td>WikiText</td>
+      <td>GLUE</td>
+      <td>88.5</td>
+    </tr>
+    <tr>
+      <td>Lee et al. 2022</td>
+      <td>RoBERTa</td>
+      <td>Korean</td>
+      <td>Korean News</td>
+      <td>KLUE</td>
+      <td>85.2</td>
+    </tr>
+    <tr>
+      <td>Garcia et al. 2020</td>
+      <td>LSTM</td>
+      <td>Spanish</td>
+      <td>Wikipedia</td>
+      <td>CoNLL</td>
+      <td>78.3</td>
+    </tr>
+    <!-- Add more rows as needed -->
+  </tbody>
+</table>
+
+<script>
+let sortDirection = Array(6).fill(true); // true = ascending, false = descending
+
+function sortTable(n) {
+  const table = document.getElementById("myTable");
+  let switching = true;
+  let dir = sortDirection[n] ? "asc" : "desc";
+  sortDirection[n] = !sortDirection[n];
+  while (switching) {
+    switching = false;
+    const rows = table.rows;
+    for (let i = 1; i < (rows.length - 1); i++) {
+      let shouldSwitch = false;
+      const x = rows[i].getElementsByTagName("TD")[n];
+      const y = rows[i + 1].getElementsByTagName("TD")[n];
+      let xContent = x.textContent || x.innerText;
+      let yContent = y.textContent || y.innerText;
+      // Try to compare as numbers, fallback to string
+      const xNum = parseFloat(xContent);
+      const yNum = parseFloat(yContent);
+      if (!isNaN(xNum) && !isNaN(yNum)) {
+        if ((dir === "asc" && xNum > yNum) || (dir === "desc" && xNum < yNum)) {
+          shouldSwitch = true;
+          break;
+        }
+      } else {
+        if ((dir === "asc" && xContent.toLowerCase() > yContent.toLowerCase()) ||
+            (dir === "desc" && xContent.toLowerCase() < yContent.toLowerCase())) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+
+function filterTable() {
+  const input = document.getElementById("filterInput");
+  const filter = input.value.toLowerCase();
+  const table = document.getElementById("myTable");
+  const trs = table.getElementsByTagName("tr");
+  for (let i = 1; i < trs.length; i++) {
+    const tds = trs[i].getElementsByTagName("td");
+    let rowContainsFilter = false;
+    for (let j = 0; j < tds.length; j++) {
+      if (tds[j].textContent.toLowerCase().indexOf(filter) > -1) {
+        rowContainsFilter = true;
+        break;
+      }
+    }
+    trs[i].style.display = rowContainsFilter ? "" : "none";
+  }
+}
+</script>
+
+</body>
+</html>
