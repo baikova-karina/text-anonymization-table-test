@@ -355,63 +355,63 @@
 
   
 <script>
-let sortState = { col: null, asc: true };
-
-function sortTable(colIdx) {
+document.addEventListener('DOMContentLoaded', function () {
   const table = document.getElementById("resultsTable");
+  const thead = table.tHead;
   const tbody = table.tBodies[0];
-  const rows = Array.from(tbody.rows);
+  let sortCol = null;
+  let sortAsc = true;
 
-  // Remove previous sort indicators
-  Array.from(table.tHead.rows[0].cells).forEach((th, idx) => {
-    th.classList.remove('sorted-asc', 'sorted-desc');
-    if (idx === colIdx) {
-      th.classList.add(sortState.col === colIdx && sortState.asc ? 'sorted-desc' : 'sorted-asc');
-    }
+  // Add click listeners to all headers
+  Array.from(thead.rows[0].cells).forEach((th, colIdx) => {
+    th.addEventListener('click', function () {
+      // Remove sort indicators from all
+      Array.from(thead.rows[0].cells).forEach(th2 => th2.classList.remove('sorted-asc', 'sorted-desc'));
+      // Toggle direction
+      if (sortCol === colIdx) {
+        sortAsc = !sortAsc;
+      } else {
+        sortCol = colIdx;
+        sortAsc = true;
+      }
+      th.classList.add(sortAsc ? 'sorted-asc' : 'sorted-desc');
+
+      // Sort rows
+      const rows = Array.from(tbody.rows);
+      rows.sort((a, b) => {
+        let aText, bText;
+        // Study column: sort by link text
+        if (colIdx === 0) {
+          aText = a.cells[0].querySelector('a')?.innerText.trim() || a.cells[0].textContent.trim();
+          bText = b.cells[0].querySelector('a')?.innerText.trim() || b.cells[0].textContent.trim();
+        }
+        // Year column: numeric sort
+        else if (colIdx === 1) {
+          aText = parseInt(a.cells[1].textContent.trim()) || 0;
+          bText = parseInt(b.cells[1].textContent.trim()) || 0;
+        }
+        // F1 column: sort by first number found
+        else if (colIdx === 8) {
+          const getFirstNumber = str => {
+            const m = str.match(/[\d.]+/);
+            return m ? parseFloat(m[0]) : 0;
+          };
+          aText = getFirstNumber(a.cells[8].textContent);
+          bText = getFirstNumber(b.cells[8].textContent);
+        }
+        // All other columns: text sort
+        else {
+          aText = a.cells[colIdx].textContent.trim().toLowerCase();
+          bText = b.cells[colIdx].textContent.trim().toLowerCase();
+        }
+        if (aText < bText) return sortAsc ? -1 : 1;
+        if (aText > bText) return sortAsc ? 1 : -1;
+        return 0;
+      });
+      rows.forEach(row => tbody.appendChild(row));
+    });
   });
-
-  // Toggle sort direction if same column, else default to ascending
-  if (sortState.col === colIdx) {
-    sortState.asc = !sortState.asc;
-  } else {
-    sortState.col = colIdx;
-    sortState.asc = true;
-  }
-
-  rows.sort((a, b) => {
-    let aText = a.cells[colIdx].textContent.trim();
-    let bText = b.cells[colIdx].textContent.trim();
-
-    // Try numeric comparison for F1 column
-    if (colIdx === 5) {
-      aText = parseFloat(aText);
-      bText = parseFloat(bText);
-      if (isNaN(aText)) aText = 0;
-      if (isNaN(bText)) bText = 0;
-    }
-
-    if (aText < bText) return sortState.asc ? -1 : 1;
-    if (aText > bText) return sortState.asc ? 1 : -1;
-    return 0;
-  });
-
-  // Re-attach sorted rows
-  rows.forEach(row => tbody.appendChild(row));
-}
-
-function filterTable() {
-  const input = document.getElementById("filterInput");
-  const filter = input.value.toLowerCase();
-  const table = document.getElementById("resultsTable");
-  const rows = table.tBodies[0].rows;
-
-  for (let i = 0; i < rows.length; i++) {
-    let rowText = Array.from(rows[i].cells)
-      .map(td => td.textContent.toLowerCase())
-      .join(" ");
-    rows[i].style.display = rowText.includes(filter) ? "" : "none";
-  }
-}
+});
 </script>
 
 </body>
