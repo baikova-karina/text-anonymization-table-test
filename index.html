@@ -37,155 +37,322 @@
 <h2>Study Results Table</h2>
 <input type="text" id="filterInput" placeholder="Type to filter table..." onkeyup="filterTable()">
 
-<table id="resultsTable">
+<table>
   <thead>
     <tr>
-      <th onclick="sortTable(0)">Study</th>
-      <th onclick="sortTable(1)">Method</th>
-      <th onclick="sortTable(2)">Language</th>
-      <th onclick="sortTable(3)">Training Corpora</th>
-      <th onclick="sortTable(4)">Test Set</th>
-      <th onclick="sortTable(5)">F1</th>
+      <th>Study</th>
+      <th>Year</th>
+      <th>Pre-processing</th>
+      <th>Main Method</th>
+      <th>Post-processing</th>
+      <th>Language</th>
+      <th>Training Corpora</th>
+      <th>Test Corpora</th>
+      <th>F1</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>CRF</td>
-  <td>English</td>
-  <td>ib2b 2006, ib2b 2014</td>
-  <td>ib2b 2006</td>
-  <td>0.948</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>CRF</td>
-  <td>English</td>
-  <td>ib2b 2006, ib2b 2014</td>
-  <td>ib2b 2014</td>
-  <td>0.878</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>CRF</td>
-  <td>English</td>
-  <td>ib2b 2006, ib2b 2014</td>
-  <td>MIMIC III</td>
-  <td>0.691</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>Presidio</td>
-  <td>English</td>
-  <td>OntoNotes 5 dataset</td>
-  <td>ib2b 2006</td>
-  <td>0.730</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>Presidio</td>
-  <td>English</td>
-  <td>OntoNotes 5 dataset</td>
-  <td>ib2b 2014</td>
-  <td>0.646</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.eacl-demo.22" target="_blank">Ribeiro et al. (2023)</a></td>
-  <td>Presidio</td>
-  <td>English</td>
-  <td>OntoNotes 5 dataset</td>
-  <td>MIMIC III</td>
-  <td>0.666</td>
-</tr>
+      <td><a href="https://aclanthology.org/2023.eacl-demo.22">Ribeiro et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, POS tagging</td>
+      <td>CRF-based NER</td>
+      <td>Presidio anonymizer (entity replacement)</td>
+      <td>English</td>
+      <td>i2b2 2006+2014 train sets</td>
+      <td>i2b2 2006, i2b2 2014, MIMIC III</td>
+      <td>0.948 (i2b2 2006), 0.878 (i2b2 2014), 0.691 (MIMIC)</td>
+    </tr>
     <tr>
-  <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/" target="_blank">Lamproudis et al. (2024)</a></td>
-  <td>ScandiBERT (RoBERTa)</td>
-  <td>Swedish, Norwegian, Danish, Icelandic, Faroese</td>
-  <td>Pseudonymized Stockholm EPR PHI Corpus</td>
-  <td>Synthetic Norwegian data</td>
-  <td>0.64</td>
-</tr>
-
-<tr>
-  <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/" target="_blank">Lamproudis et al. (2024)</a></td>
-  <td>SweDeClin-BERT</td>
-  <td>Swedish</td>
-  <td>Pseudonymized Stockholm EPR PHI Corpus</td>
-  <td>Synthetic Norwegian data</td>
-  <td>0.41</td>
-</tr>
-
-<tr>
-  <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/" target="_blank">Lamproudis et al. (2024)</a></td>
-  <td>NorBERT</td>
-  <td>Norwegian</td>
-  <td>Pseudonymized Stockholm EPR PHI Corpus</td>
-  <td>Synthetic Norwegian data</td>
-  <td>0.62</td>
-</tr>
-
-<tr>
-  <td><a href="https://aclanthology.org/2023.arabicnlp-1.4" target="_blank">Kocaman et al. (2023)</a></td>
-  <td>BFTC (Camel-BERT)</td>
-  <td>Arabic</td>
-  <td>i2b2 2014 (translated)</td>
-  <td>i2b2 2014 (translated)</td>
-  <td>0.9700</td>
-</tr>
-
-<tr>
-  <td><a href="https://aclanthology.org/2023.arabicnlp-1.4" target="_blank">Kocaman et al. (2023)</a></td>
-  <td>BFTC (AraBERT-base)</td>
-  <td>Arabic</td>
-  <td>i2b2 2014 (translated)</td>
-  <td>i2b2 2014 (translated)</td>
-  <td>0.9600</td>
-</tr>
-
-  <tr>
-  <td><a href="https://aclanthology.org/2023.emnlp-main.224" target="_blank">Liu et al. (2023)</a></td>
-  <td>CNN</td>
-  <td>Chinese</td>
-  <td>EMRs from general hospital in Zhejiang Province, China</td>
-  <td>within-hospital; cross-hospital; cross-hospital</td>
-  <td>0.981; 0.742; 0.517</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.emnlp-main.224" target="_blank">Liu et al. (2023)</a></td>
-  <td>BiLSTM</td>
-  <td>Chinese</td>
-  <td>EMRs from general hospital in Zhejiang Province, China</td>
-  <td>within-hospital; cross-hospital; cross-hospital</td>
-  <td>0.986; 0.783; 0.501</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.emnlp-main.224" target="_blank">Liu et al. (2023)</a></td>
-  <td>BERT-wwm</td>
-  <td>Chinese</td>
-  <td>EMRs from general hospital in Zhejiang Province, China</td>
-  <td>within-hospital; cross-hospital; cross-hospital</td>
-  <td>0.996; 0.967; 0.782</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.emnlp-main.224" target="_blank">Liu et al. (2023)</a></td>
-  <td>MC-BERT</td>
-  <td>Chinese</td>
-  <td>EMRs from general hospital in Zhejiang Province, China</td>
-  <td>within-hospital; cross-hospital; cross-hospital</td>
-  <td>0.995; 0.967; 0.766</td>
-</tr>
-<tr>
-  <td><a href="https://aclanthology.org/2023.emnlp-main.224" target="_blank">Liu et al. (2023)</a></td>
-  <td>BERT</td>
-  <td>Chinese</td>
-  <td>EMRs from general hospital in Zhejiang Province, China</td>
-  <td>within-hospital; cross-hospital; cross-hospital</td>
-  <td> 0.997; 0.965; 0.797</td>
-</tr>
-
+      <td><a href="https://aclanthology.org/2023.eacl-demo.22">Ribeiro et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization</td>
+      <td>Presidio+SpaCy NER</td>
+      <td>Presidio anonymizer (entity replacement)</td>
+      <td>English</td>
+      <td>SpaCy model (OntoNotes 5, general domain)</td>
+      <td>i2b2 2006, i2b2 2014, MIMIC III</td>
+      <td>0.730 (i2b2 2006), 0.646 (i2b2 2014), 0.666 (MIMIC)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization</td>
+      <td>CNN</td>
+      <td>Optional CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.982; SY: 0.734; CCKS: 0.524</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, HM-Word2Vec embeddings</td>
+      <td>CNN + HM-Word2Vec</td>
+      <td>Optional CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.980; SY: 0.787; CCKS: 0.522</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization</td>
+      <td>BiLSTM</td>
+      <td>Optional CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.986; SY: 0.789; CCKS: 0.528</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, HM-Word2Vec embeddings</td>
+      <td>BiLSTM + HM-Word2Vec</td>
+      <td>Optional CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.989; SY: 0.826; CCKS: 0.483</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization</td>
+      <td>BERT-wwm</td>
+      <td>Optional BiLSTM/CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.994; SY: 0.970; CCKS: 0.767</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization</td>
+      <td>MC-BERT</td>
+      <td>Optional BiLSTM/CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.995; SY: 0.970; CCKS: 0.767</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.emnlp-main.224">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, domain-specific pretraining</td>
+      <td>HM-BERT</td>
+      <td>Optional BiLSTM/CRF layer</td>
+      <td>Chinese</td>
+      <td>HM dataset (300 EMRs)</td>
+      <td>HM test set, SY test set, CCKS test set</td>
+      <td>HM: 0.997; SY: 0.967; CCKS: 0.785</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/">Lamproudis et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Tokenization</td>
+      <td>ScandiBERT</td>
+      <td>None</td>
+      <td>Norwegian</td>
+      <td>Pseudonymized Stockholm EPR PHI Corpus</td>
+      <td>Norwegian synthetic data</td>
+      <td>0.64 (macro) / 0.55 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/">Lamproudis et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Tokenization</td>
+      <td>SweDeClin-BERT</td>
+      <td>None</td>
+      <td>Norwegian</td>
+      <td>Pseudonymized Stockholm EPR PHI Corpus</td>
+      <td>Norwegian synthetic data</td>
+      <td>0.41 (macro) / 0.39 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10785939/">Lamproudis et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Tokenization</td>
+      <td>NorBERT</td>
+      <td>None</td>
+      <td>Norwegian</td>
+      <td>Pseudonymized Stockholm EPR PHI Corpus</td>
+      <td>Norwegian synthetic data</td>
+      <td>0.62 (macro) / 0.57 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.arabicnlp-1.4">Kocaman et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, sentence splitting, GLoVe embeddings</td>
+      <td>Bi-LSTM-CNN-Char NER</td>
+      <td>Contextual Parser (regex rules), chunk merger, masking/obfuscation</td>
+      <td>Arabic</td>
+      <td>Translated i2b2 2014 (generic entities)</td>
+      <td>Translated i2b2 2014 (generic entities, 20%)</td>
+      <td>0.9378 (macro), 0.9572 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.arabicnlp-1.4">Kocaman et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, sentence splitting, AraBERT embeddings</td>
+      <td>Bi-LSTM-CNN-Char NER</td>
+      <td>Contextual Parser (regex rules), chunk merger, masking/obfuscation</td>
+      <td>Arabic</td>
+      <td>Translated i2b2 2014 (generic entities)</td>
+      <td>Translated i2b2 2014 (generic entities, 20%)</td>
+      <td>0.9372 (macro), 0.9505 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.arabicnlp-1.4">Kocaman et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, sentence splitting, CamelBERT embeddings</td>
+      <td>Bi-LSTM-CNN-Char NER</td>
+      <td>Contextual Parser (regex rules), chunk merger, masking/obfuscation</td>
+      <td>Arabic</td>
+      <td>Translated i2b2 2014 (generic entities)</td>
+      <td>Translated i2b2 2014 (generic entities, 20%)</td>
+      <td>0.9590 (macro), 0.9712 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.arabicnlp-1.4">Kocaman et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, sentence splitting</td>
+      <td>BERT For Token Classification (AraBERT)</td>
+      <td>Contextual Parser (regex rules), chunk merger, masking/obfuscation</td>
+      <td>Arabic</td>
+      <td>Translated i2b2 2014 (generic entities)</td>
+      <td>Translated i2b2 2014 (generic entities, 20%)</td>
+      <td>0.9600 (macro), 0.9800 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://aclanthology.org/2023.arabicnlp-1.4">Kocaman et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Tokenization, sentence splitting</td>
+      <td>BERT For Token Classification (CamelBERT)</td>
+      <td>Contextual Parser (regex rules), chunk merger, masking/obfuscation</td>
+      <td>Arabic</td>
+      <td>Translated i2b2 2014 (generic entities)</td>
+      <td>Translated i2b2 2014 (generic entities, 20%)</td>
+      <td>0.9700 (macro), 0.9800 (micro)</td>
+    </tr>
+    <tr>
+      <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11078567/">Chen et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Sentence splitting, tokenization (spaCy biomedical model + custom rules)</td>
+      <td>RoBERTa (pretrained, fine-tuned on i2b2 2014)</td>
+      <td>None reported</td>
+      <td>English</td>
+      <td>i2b2 2014 discharge summaries</td>
+      <td>i2b2 2014 test set</td>
+      <td>0.956 (macro, PHI categories), 0.978 (PHI binary)</td>
+    </tr>
+    <tr>
+      <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11078567/">Chen et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Sentence splitting, tokenization (spaCy biomedical model + custom rules)</td>
+      <td>RoBERTa (pretrained, fine-tuned on i2b2 2014)</td>
+      <td>None reported</td>
+      <td>English</td>
+      <td>i2b2 2014 discharge summaries</td>
+      <td>Inpatient nursing notes (CONCERN study, 1,334 notes)</td>
+      <td>0.887 (macro, PHI categories), 0.932 (PHI binary)</td>
+    </tr>
+    <tr>
+      <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11078567/">Chen et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Sentence splitting, tokenization (spaCy biomedical model + custom rules)</td>
+      <td>ClinicalBERT (pretrained, fine-tuned on i2b2 2014)</td>
+      <td>None reported</td>
+      <td>English</td>
+      <td>i2b2 2014 discharge summaries</td>
+      <td>i2b2 2014 test set</td>
+      <td>0.820 (macro, PHI categories), 0.963 (PHI binary)</td>
+    </tr>
+    <tr>
+      <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11078567/">Chen et al. (2024)</a></td>
+      <td>2024</td>
+      <td>Sentence splitting, tokenization (spaCy biomedical model + custom rules)</td>
+      <td>ClinicalBERT (pretrained, fine-tuned on i2b2 2014)</td>
+      <td>None reported</td>
+      <td>English</td>
+      <td>i2b2 2014 discharge summaries</td>
+      <td>Inpatient nursing notes (CONCERN study, 1,334 notes)</td>
+      <td>0.615 (macro, PHI categories), 0.834 (PHI binary)</td>
+    </tr>
+    <tr>
+      <td><a href="https://link.springer.com/article/10.1186/s12911-024-02422-5">Azzouzi et al. (2024)</a></td>
+      <td>2024</td>
+      <td>HTML parsing, sentence splitting (NLTK), tokenization, BIO tagging, dictionary/rule-based entity marking, normalization, data augmentation</td>
+      <td>BiLSTM-CRF + FastText + Flair (stacked)</td>
+      <td>Masking / obfuscation of PII in original HTML, entity-level evaluation</td>
+      <td>French</td>
+      <td>eHOP Clinical Data Warehouse (Rennes University Hospital), automatic annotation using knowledge bases (BAN, Health Directory)</td>
+      <td>Manually annotated subset of eHOP CDW (1000 documents, stratified by format)</td>
+      <td>0.9713 (macro-avg), 0.9696 (micro-avg)</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.i-jmr.org/2023/1/e46322">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Text import, manual annotation, project/data set organization, PII type configuration, autosave, preannotation, iterative retraining</td>
+      <td>BiLSTM-CRF (RoBERTa embeddings, implemented in FLAIR)</td>
+      <td>Tagging and masking of PII, export of deidentified text, entity-level evaluation</td>
+      <td>English</td>
+      <td>2014 i2b2 annotated free-text clinical notes</td>
+      <td>2014 i2b2 held-out set</td>
+      <td>0.9627 (strict entity-level, micro-avg)</td>
+    </tr>
+    <tr>
+      <td><a href="https://www.i-jmr.org/2023/1/e46322">Liu et al. (2023)</a></td>
+      <td>2023</td>
+      <td>Text import, manual annotation, project/data set organization, PII type configuration, autosave, preannotation, iterative retraining</td>
+      <td>BiLSTM-CRF (RoBERTa embeddings, implemented in FLAIR)</td>
+      <td>Tagging and masking of PII, export of deidentified text, entity-level evaluation</td>
+      <td>English</td>
+      <td>600 annotated clinical notes from CardiacAI (Australian hospital)</td>
+      <td>Held-out set from CardiacAI</td>
+      <td>0.9507 (strict entity-level, micro-avg)</td>
+    </tr>
+    <tr>
+      <td><a href="https://ieeexplore.ieee.org/abstract/document/10321968">Suvirat et al. 2023</a></td>
+      <td>2023</td>
+      <td>WordPiece tokenization, fine-tuning</td>
+      <td>Multilingual BERT</td>
+      <td>Classification head (13 outputs)</td>
+      <td>Thai</td>
+      <td>Thai clinical notes from Songklanagarind Hospital</td>
+      <td>Thai clinical notes from Songklanagarind Hospital (held out set)</td>
+      <td>0.9262</td>
+    </tr>
+    <tr>
+      <td><a href="https://ieeexplore.ieee.org/abstract/document/10321968">Suvirat et al. 2023</a></td>
+      <td>2023</td>
+      <td>SentencePiece tokenization, fine-tuning</td>
+      <td>WangChan-BERTa</td>
+      <td>Classification head (13 outputs)</td>
+      <td>Thai</td>
+      <td>Thai clinical notes from Songklanagarind Hospital</td>
+      <td>Thai clinical notes from Songklanagarind Hospital (held out set)</td>
+      <td>0.9338</td>
+    </tr>
+    <tr>
+      <td><a href="https://ieeexplore.ieee.org/abstract/document/10321968">Suvirat et al. 2023</a></td>
+      <td>2023</td>
+      <td>Byte-pair encoding (BPE) tokenization, fine-tuning</td>
+      <td>MEDPSU-RoBERTa</td>
+      <td>Classification head (13 outputs)</td>
+      <td>Thai</td>
+      <td>Thai clinical notes from Songklanagarind Hospital</td>
+      <td>Thai clinical notes from Songklanagarind Hospital (held out set)</td>
+      <td>0.9552</td>
+    </tr>
   </tbody>
 </table>
 
+  
 <script>
 let sortState = { col: null, asc: true };
 
