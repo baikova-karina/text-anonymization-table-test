@@ -34,10 +34,22 @@
 </head>
 <body>
 
+<div id="filters" style="margin-bottom:10px;">
+  <input type="text" placeholder="Filter Study" data-col="0">
+  <input type="text" placeholder="Filter Year" data-col="1">
+  <input type="text" placeholder="Filter Pre-processing" data-col="2">
+  <input type="text" placeholder="Filter Main Method" data-col="3">
+  <input type="text" placeholder="Filter Post-processing" data-col="4">
+  <input type="text" placeholder="Filter Language" data-col="5">
+  <input type="text" placeholder="Filter Training Corpora" data-col="6">
+  <input type="text" placeholder="Filter Test Corpora" data-col="7">
+  <input type="text" placeholder="Filter F1" data-col="8">
+</div>
+
 <h2>Study Results Table</h2>
 <input type="text" id="filterInput" placeholder="Type to filter table..." onkeyup="filterTable()">
 
-<table>
+<table id="resultsTable">
   <thead>
     <tr>
       <th>Study</th>
