@@ -362,6 +362,25 @@ document.addEventListener('DOMContentLoaded', function () {
   let sortCol = null;
   let sortAsc = true;
 
+  // Filtering logic
+  document.getElementById("filterInput").addEventListener("keyup", filterTable);
+
+  function filterTable() {
+    const filter = document.getElementById("filterInput").value.toLowerCase();
+    Array.from(tbody.rows).forEach(row => {
+      const cells = Array.from(row.cells);
+      // For Study column, also check link text
+      const studyCell = row.cells[0];
+      let studyText = studyCell.querySelector('a')?.innerText.toLowerCase() || studyCell.textContent.toLowerCase();
+      // Combine all cell text for this row
+      const rowText = [studyText].concat(
+        cells.slice(1).map(cell => cell.textContent.toLowerCase())
+      ).join(" ");
+      row.style.display = rowText.indexOf(filter) > -1 ? "" : "none";
+    });
+  }
+
+  // Sorting logic
   // Add click listeners to all headers
   Array.from(thead.rows[0].cells).forEach((th, colIdx) => {
     th.addEventListener('click', function () {
